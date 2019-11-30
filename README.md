@@ -1,5 +1,31 @@
 # URL Shortener
 
+A URL shortening service using Ruby. 
+
+## Local installation
+
+* Clone this repository
+* Run the following commands
+
+```
+bundle install
+```
+
+* Check all the tests are running using ```rspec``` commmand.
+* Run the server using ``` rackup``` 
+* On the command line to make a POST request run 
+
+```
+curl localhost:9292/shortener -XPOST -d '{ "url": "https://www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry" }'
+{"short_url":"/yyotpw","url":"https://www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry"}
+```
+
+* Take the short url and then run this.
+
+```
+curl -v localhost:9292/yyotpw
+```
+
 ## User Stories
 
 ```
@@ -15,6 +41,18 @@ As a user,
 When I send a GET request to short URL localhost:9292/sftjgb
 It should redirect me to the URL www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry
 ```
+
+### Tech used
+
+- Ruby 
+- Sinatra
+- Javascript 
+
+#### Testing (98.5% coverage)
+
+- Rspec 
+- Rubocop
+- Simplecov 
 
 # Url Shortener Code Test
 
