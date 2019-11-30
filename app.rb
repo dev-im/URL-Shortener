@@ -2,7 +2,25 @@
 
 require 'sinatra/base'
 require 'sinatra/json'
-# require './lib/url_shortener'
+require './lib/url_shortener'
 
 class URLShortener < Sinatra::Base
+    @@url_list = []
+
+    post '/shortener' do
+        @new_url = Shortener.new
+        @new_url = @new_url.generate_short_url
+        params = JSON.parse(request.body.read)
+        url = params['url']
+    
+        if !url.start_with?('http://') && !url.start_with?('https://')
+          url = 'http://' + url
+        end
+    
+        entry = { short_url: @new_url.to_s, url: url.to_s }
+    
+        @@url_list << entry
+        json entry
+    end
+    
 end
