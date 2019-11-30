@@ -7,6 +7,10 @@ require './lib/url_shortener'
 class URLShortener < Sinatra::Base
   @@url_list = []
 
+  get '/' do
+    erb :shortener
+  end
+
   post '/shortener' do
     @new_url = Shortener.new
     @new_url = @new_url.generate_short_url

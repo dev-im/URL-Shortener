@@ -47,4 +47,10 @@ describe URLShortener do
       expect(response_hash['url']).to eq('https://www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry')
     end
   end
+
+  describe 'GET /' do
+    it 'returns a 200 status' do
+      expect(last_response.status).to eq 200
+    end
+  end
 end
