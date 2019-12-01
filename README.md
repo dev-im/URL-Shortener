@@ -26,6 +26,9 @@ curl localhost:9292/shortener -XPOST -d '{ "url": "https://www.farmdrop.com/lond
 curl -v localhost:9292/yyotpw
 ```
 
+* Run ```rackup``` and go to http://localhost:9292/ in your browser to see the front end. 
+
+
 ## User Stories
 
 ```
@@ -42,7 +45,7 @@ When I send a GET request to short URL localhost:9292/sftjgb
 It should redirect me to the URL www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry
 ```
 
-### Tech used
+### Technology used
 
 - Ruby 
 - Sinatra
