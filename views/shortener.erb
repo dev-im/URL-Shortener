@@ -12,9 +12,7 @@
             <input type="submit" value="Create short URL!">
         </form>
 
-        # <ul>
-        #     <li><a href="/fgvhgfg">http://localhost:9292/fgvhgfg</a></li>
-        # </ul>
+        <ul id="links"></ul>
 
         <script type="text/javascript">
             const formElement = document.getElementById('url-form');
@@ -24,13 +22,27 @@
                 const url = document.getElementById("url").value;
                 console.log(url)
                 try {
-                    const data = await postData('/shortener', { url: url });
+                    const data = await postData('/shortener', { url: url });    
                     console.log(data); 
+
+                    const shortUrl = `http://localhost:9292${data.short_url}`;
+
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    const linkText = document.createTextNode(shortUrl);
+
+                    link.appendChild(linkText);
+                    link.title = data.url;
+                    link.href = shortUrl;
+
+                    listItem.appendChild(link);
+
+                    document.getElementById('links').appendChild(listItem);
+
                 } catch (error) {
                     console.error(error);
                 }
             });
-
 
             async function postData(url, data) {
                 const response = await fetch(url, {
