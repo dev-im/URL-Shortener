@@ -9,6 +9,8 @@ class URLShortener < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/static'
 
   @@url_list = []
+  @@short_url_counter = Hash.new(0)
+  
 
   get '/' do
     erb :shortener
@@ -18,12 +20,7 @@ class URLShortener < Sinatra::Base
       shortener = Shortener.new
       short_url = shortener.generate_short_url
 
-      begin
-        params = JSON.parse(request.body.read)
-      rescue
-        status 404
-        return json :error => 'Invalid request'
-      end
+      params = invalid_post_request
 
       url = params['url']
 
@@ -51,6 +48,16 @@ class URLShortener < Sinatra::Base
       return json :error => 'This short URL could not be found'
     end
 
-    redirect to(entry[:url]), 301, json(url: entry[:url])
+    @@short_url_counter[requested_short_url] += 1
+    redirect to(entry[:url]), 301, json(url: entry[:url], short_url: @@short_url_counter[requested_short_url])
   end
+
+  private 
+
+  def invalid_post_request
+      params = JSON.parse(request.body.read)
+    rescue
+      status 404
+      return json :error => 'Invalid request'
+  end 
 end

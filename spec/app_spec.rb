@@ -46,6 +46,19 @@ describe URLShortener do
       response_hash = JSON.parse(last_response.body)
       expect(response_hash['url']).to eq('https://www.farmdrop.com/london/recipes/555/chickpea-squash-and-coconut-curry')
     end
+
+    it 'stores the number of times someone uses the shortened url' do 
+      get @post_response_hash['short_url']
+      response_hash = JSON.parse(last_response.body)
+      expect(response_hash).to include({'short_url' => 1})
+    end 
+
+    it 'stores the number of times someone uses the shortened url' do 
+      get @post_response_hash['short_url']
+      get @post_response_hash['short_url']
+      response_hash = JSON.parse(last_response.body)
+      expect(response_hash).to include({'short_url' => 2})
+    end 
   end
 
   describe 'GET /' do
